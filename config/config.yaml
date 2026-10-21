@@ -1,0 +1,68 @@
+# =====================================================================
+# Cấu hình dự án NCKH: vn-llm-agents
+# Ứng dụng LLM và hệ thống đa tác tử hỗ trợ ra quyết định tham khảo
+# trong phân tích tài chính và giao dịch chứng khoán Việt Nam
+# =====================================================================
+
+project:
+  name: "vn-llm-agents"
+  seed: 42
+  currency: "VND"
+  price_unit: "thousand_VND"  # Đơn vị nghìn đồng
+
+tickers:
+  state_owned:
+    - "VCB"
+    - "BID"
+    - "CTG"
+  private:
+    - "MBB"
+    - "ACB"
+    - "TCB"
+    - "VPB"
+  benchmark: "VNINDEX"
+
+dates:
+  start_date: "2020-01-01"
+  end_date: "2026-09-30"
+  splits:
+    train:
+      start: "2020-01-01"
+      end: "2024-12-31"
+    validation:
+      start: "2025-01-01"
+      end: "2025-12-31"
+    test:
+      start: "2026-01-01"
+      end: "2026-09-30"
+
+trading:
+  horizon_h: 5                  # Lợi suất tương lai h phiên
+  decision_every_n_days: 5      # Tần suất ra quyết định (hàng tuần)
+  initial_capital: 100000000    # Vốn ban đầu 100,000,000 VND
+  transaction_fee: 0.0025       # Phí giao dịch 0.25% mỗi lượt
+  sales_tax: 0.0010             # Thuế bán 0.10%
+  lot_size: 100                 # Lô chẵn 100 cổ phiếu (sàn HOSE)
+  price_limit_ratio: 0.07       # Biên độ dao động trần/sàn +-7% sàn HOSE
+
+data:
+  prices_source: "kbs"
+  fallback_sources:
+    - "vci"
+    - "msn"
+  rate_limit_rpm: 50            # Tối đa 50 requests/phút
+  raw_dir: "data/raw"
+  interim_dir: "data/interim"
+  processed_dir: "data/processed"
+  fundamentals_delay_days_quarter: 45 # Độ trễ công bố BCTC quý (ngày)
+  fundamentals_delay_days_annual: 90  # Độ trễ công bố BCTC năm (ngày)
+
+llm:
+  provider: "ollama"
+  roles:
+    extractor: "qwen2.5:3b"  # Trích xuất thông tin nhanh
+    agent: "qwen2.5:3b"      # Phân tích kỹ thuật & cơ bản
+    judge: "qwen2.5:3b"      # Tổng hợp ra quyết định
+  temperature: 0.0
+  max_budget_usd: 0.0        # Miễn phí 100%
+  cache_dir: ".cache/llm"

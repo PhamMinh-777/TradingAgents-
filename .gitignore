@@ -1,0 +1,115 @@
+# ==============================================================================
+# .gitignore cho đề tài NCKH: vn-llm-agents
+# Quy tắc: Chỉ push mã nguồn, tài liệu và cấu hình cần thiết lên Git.
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. BIẾN MÔI TRƯỜNG & KHÓA BẢO MẬT (TUYỆT ĐỐI KHÔNG PUSH)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+.env.local
+!.env.example
+*.pem
+*.key
+*.crt
+
+# ------------------------------------------------------------------------------
+# 2. DỮ LIỆU (RAW, INTERIM, PROCESSED)
+# Giữ cấu trúc thư mục rỗng qua .gitkeep, không push file dữ liệu nặng (*.parquet, *.csv, ...)
+# ------------------------------------------------------------------------------
+data/raw/*
+!data/raw/.gitkeep
+
+data/interim/*
+!data/interim/.gitkeep
+
+data/processed/*
+!data/processed/.gitkeep
+
+# Dữ liệu định dạng lớn bất kỳ đâu trong repo nếu vô tình tạo ra
+*.parquet
+*.feather
+*.h5
+*.hdf5
+
+# ------------------------------------------------------------------------------
+# 3. KẾT QUẢ SINH RA KHI CHẠY (OUTPUTS & LOGS)
+# Giữ cấu trúc thư mục outputs/, loại trừ toàn bộ bảng biểu, biểu đồ và nhật ký sinh tự động
+# ------------------------------------------------------------------------------
+outputs/tables/*
+!outputs/tables/.gitkeep
+
+outputs/figures/*
+!outputs/figures/.gitkeep
+
+outputs/logs/*
+!outputs/logs/.gitkeep
+
+*.log
+
+# ------------------------------------------------------------------------------
+# 4. BỘ NHỚ ĐỆM (CACHE & RUNTIME)
+# ------------------------------------------------------------------------------
+# Cache gọi LLM và diskcache
+.cache/
+/.cache
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Test & coverage cache
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.mypy_cache/
+.ruff_cache/
+
+# ------------------------------------------------------------------------------
+# 5. MÔI TRƯỜNG ẢO (VIRTUAL ENVIRONMENTS)
+# ------------------------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ------------------------------------------------------------------------------
+# 6. JUPYTER NOTEBOOKS & COLAB
+# ------------------------------------------------------------------------------
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# ------------------------------------------------------------------------------
+# 7. IDE & TRÌNH SOẠN THẢO CODE
+# ------------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.gemini/
+
+# ------------------------------------------------------------------------------
+# 8. HỆ ĐIỀU HÀNH (WINDOWS & MACOS)
+# ------------------------------------------------------------------------------
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
